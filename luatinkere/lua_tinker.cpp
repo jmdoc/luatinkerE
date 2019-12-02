@@ -463,9 +463,10 @@ void lua_tinker::detail::_stack_help<lua_tinker::table_onstack>::_push(lua_State
 
 std::string lua_tinker::detail::_stack_help<std::string>::_read(lua_State *L, int index)
 {
-	const char* strLua = lua_tostring(L,index);
-	if(strLua)
-		return std::string(strLua);
+	size_t len;
+	const char* strLua = lua_tolstring(L,index,&len);
+	if(strLua && len)
+		return std::string(strLua,len);
 	else
 		return std::string();
 }
